@@ -21,7 +21,7 @@ export class ReportAnswerService {
   }
 
   createReportAnswer(reportAnswer: ReportAnswer) {
-    return this.http.post(environment.URL_BASE + 'reportanswer', reportAnswer);
+    return this.http.post(environment.URL_BASE + 'reportanswer/', reportAnswer);
   }
 
   updateReportAnswer(reportAnswer: ReportAnswer) {
