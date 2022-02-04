@@ -1,0 +1,26 @@
+<h1 class="text-center">{{quiz.name}}</h1>
+<hr class="border-2 border-top">
+<form *ngIf="this.formGroup" [formGroup]="this.formGroup">
+    <div class="mb-3" *ngFor="let question of quiz.questions">
+
+      <label for="question-{{quiz.id}}-{{question.id}}" class="form-label">{{question.text}}</label>
+      
+      <ng-container *ngIf="question.type_question == 'SA'">
+        <textarea formControlName='question-{{quiz.id}}-{{question.id}}' class="form-control" id="question-{{quiz.id}}-{{question.id}}" rows="3"></textarea>
+      </ng-container>
+      
+      <ng-container *ngIf="question.type_question == 'MCQ'">
+        <select formControlName='question-{{quiz.id}}-{{question.id}}' class="form-select form-select" >
+            <option selected>Seleccionar</option>
+            <option *ngFor="let option of question.options" value="{{option.id}}">{{option.text}}</option>
+          </select>
+      </ng-container>
+
+    
+
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button (click)="this.saveReportAnswer()" class="btn btn-primary">Enviar</button>
+    </div>
+</form>
