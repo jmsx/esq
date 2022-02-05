@@ -10,7 +10,7 @@
       </ng-container>
       
       <ng-container *ngIf="question.type_question == 'MCQ'">
-        <select formControlName='question-{{quiz.id}}-{{question.id}}' class="form-select form-select" >
+        <select formControlName='question-{{quiz.id}}-{{question.id}}' class="form-select form-select w-100" >
             <option selected>Seleccionar</option>
             <option *ngFor="let option of question.options" value="{{option.id}}">{{option.text}}</option>
           </select>

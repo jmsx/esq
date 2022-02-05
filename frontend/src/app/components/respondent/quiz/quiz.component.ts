@@ -50,6 +50,9 @@ export class QuizComponent implements OnInit {
       user: 1,
       answers: []
     };
+
+
+
     this.quiz.questions.forEach((question: Question) => {
       let answer: Answer;
       if(question.type_question === 'SA') {
@@ -66,18 +69,33 @@ export class QuizComponent implements OnInit {
       reportAnswer.answers.push(answer);
     });
 
-    console.log(reportAnswer);
-    this.reportAnswerService.createReportAnswer(reportAnswer).subscribe(
-      (reportAnswer: ReportAnswer) => {
-        console.log("Reporte guardado");
-        console.log(reportAnswer);
-        this.toastr.success("Los datos han sido guardados", "Envio correcto");
-      },
-      () => {
-        console.log("Error al guardar el reporte");
-      }
-    );
-  }
+    if(this.reportAnswer?.id !== undefined) {
+      reportAnswer.id = this.reportAnswer.id;
+      this.reportAnswerService.updateReportAnswer(reportAnswer).subscribe(
+        (reportAnswer: ReportAnswer) => {
+  
+          this.reportAnswer = reportAnswer;
+          this.toastr.success("Los datos han sido actualizados", "Envio correcto!");
+        },
+        () => {
+          this.toastr.error("Error al actualizar el reporte", "Error!")
+        }
+      );
+    }else{
+      this.reportAnswerService.createReportAnswer(reportAnswer).subscribe(
+        (reportAnswer: ReportAnswer) => {
+  
+          this.reportAnswer = reportAnswer;
+          this.toastr.success("Los datos han sido guardados", "Envio correcto!");
+        },
+        () => {
+          this.toastr.error("Error al guardar el reporte", "Error!")
+        }
+      );
+    }
+
+    
+  } 
 
   generateForm() {
     let formGroup = new FormGroup({});

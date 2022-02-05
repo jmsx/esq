@@ -25,11 +25,11 @@ export class ReportAnswerService {
   }
 
   updateReportAnswer(reportAnswer: ReportAnswer) {
-    return this.http.put(environment.URL_BASE + 'reportanswer/' + reportAnswer.id, reportAnswer);
+    return this.http.put(environment.URL_BASE + 'reportanswer/' + reportAnswer.id + "/", reportAnswer);
   }
 
   deleteReportAnswer(id: number) {
-    return this.http.delete(environment.URL_BASE + 'reportanswer/' + id);
+    return this.http.delete(environment.URL_BASE + 'reportanswer/' + id + "/");
   }
   
 }
