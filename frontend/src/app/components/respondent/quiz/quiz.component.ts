@@ -11,6 +11,9 @@ import { ReportAnswer } from 'src/app/models/report-answer';
 import { Question } from 'src/app/models/question';
 import { Answer } from 'src/app/models/answer';
 import { ReportAnswerService } from 'src/app/services/report-answer.service';
+import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
   selector: 'app-quiz',
@@ -27,7 +30,7 @@ export class QuizComponent implements OnInit {
     private quizService: QuizService,
     private route: ActivatedRoute,
     private reportAnswerService: ReportAnswerService,
-
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -68,6 +71,7 @@ export class QuizComponent implements OnInit {
       (reportAnswer: ReportAnswer) => {
         console.log("Reporte guardado");
         console.log(reportAnswer);
+        this.toastr.success("Los datos han sido guardados", "Envio correcto");
       },
       () => {
         console.log("Error al guardar el reporte");
