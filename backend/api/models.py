@@ -43,7 +43,7 @@ class ReportAnswer(models.Model):
 class Answer(models.Model):
     report_answer = models.ForeignKey('ReportAnswer', on_delete=models.CASCADE)
     question = models.ForeignKey('Question', on_delete=models.CASCADE)
-    answer_option = models.ForeignKey('OptionQuestion', on_delete=models.CASCADE)
+    answer_option = models.ForeignKey('OptionQuestion', on_delete=models.CASCADE, blank=True, null=True)
     answer_text = models.CharField(max_length=200, blank=True)
 
     def __str__(self):

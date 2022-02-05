@@ -2,11 +2,13 @@ from rest_framework import serializers
 from .models import *
 
 class OptionQuestionSerializer(serializers.ModelSerializer):
+    id = serializers.ModelField(model_field=OptionQuestion()._meta.get_field('id'))
     class Meta:
         model = OptionQuestion
         fields = ('id', 'text', 'question')
 
 class QuestionSerializer(serializers.ModelSerializer):
+    id = serializers.ModelField(model_field=Question()._meta.get_field('id'))
     options = OptionQuestionSerializer(source='optionquestion_set', many=True, read_only=True)
     class Meta:
         model = Question
@@ -22,25 +24,20 @@ class AnswerSerializer(serializers.ModelSerializer):
     answer_option = OptionQuestionSerializer(many=False, read_only=False, required=False)
     question = QuestionSerializer(many=False, read_only=False, required=True)
 
-    def create(self, validated_data):
-        question = validated_data.pop('question')
-        answer_option = validated_data.pop('answer_option', None)
+    # def create(self, validated_data):
+    #     question = validated_data.pop('question')
+    #     answer_option = validated_data.pop('answer_option', None)
 
-        question = Question.objects.get(id=question['id'])
-        if answer_option is not None:
-            answer_option = OptionQuestion.objects.get(id=answer_option['id'])
-        else:
-            answer_option = None
+    #     question = Question.objects.get(id=question['id'])
+    #     if answer_option is not None:
+    #         answer_option = OptionQuestion.objects.get(id=answer_option['id'])
+    #     else:
+    #         answer_option = None
 
-        answer = Answer.objects.create(question=question, answer_option=answer_option, **validated_data)
+    #     answer = Answer.objects.create(question=question, answer_option=answer_option, **validated_data)
 
-        return answer
+    #     return answer
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["question"] = QuestionSerializer(instance.question).data
-        data["answer_option"] = OptionQuestionSerializer(instance.answer_option).data
-        return data
 
     class Meta:
         model = Answer
@@ -60,8 +57,8 @@ class ReportAnswerSerializer(serializers.ModelSerializer):
                 answer = Answer.objects.create(report_answer=report_answer, question=question, answer_option=answer_option)
             else:
                 answer = Answer.objects.create(report_answer=report_answer, question=question, answer_text=answer['answer_text'])
-            report_answer.answers.add(answer)
-        return recipe
+           # report_answer.answers.add(answer)
+        return report_answer
 
     class Meta:
         model = ReportAnswer
