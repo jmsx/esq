@@ -5,13 +5,13 @@ from drf_writable_nested import WritableNestedModelSerializer
 class OptionQuestionSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     class Meta:
         model = OptionQuestion
-        fields = ('id', 'text', 'question')
+        fields = ('id', 'text')
 
 class QuestionSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     options = OptionQuestionSerializer(source='optionquestion_set', many=True, read_only=False)
     class Meta:
         model = Question
-        fields = ('id', 'text', 'type_question', 'quiz', 'options')
+        fields = ('id', 'text', 'type_question', 'options')
 
 class QuizSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     questions = QuestionSerializer(source='question_set', many=True, read_only=False)
@@ -29,20 +29,6 @@ class AnswerSerializer(WritableNestedModelSerializer, serializers.ModelSerialize
 
 class ReportAnswerSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     answers = AnswerSerializer(source='answer_set', many=True, read_only=False)
-
-    # def create(self, validated_data):
-    #     answers_data = validated_data.pop('answer_set')
-    #     report_answer = ReportAnswer.objects.create(**validated_data)
-
-    #     for answer in answers_data:
-    #         question = Question.objects.get(id=answer['question']['id'])
-    #         if question.type_question == 'MCQ':
-    #             answer_option = OptionQuestion.objects.get(id=answer['answer_option']['id'])
-    #             answer = Answer.objects.create(report_answer=report_answer, question=question, answer_option=answer_option)
-    #         else:
-    #             answer = Answer.objects.create(report_answer=report_answer, question=question, answer_text=answer['answer_text'])
-    #        # report_answer.answers.add(answer)
-    #     return report_answer
 
     class Meta:
         model = ReportAnswer

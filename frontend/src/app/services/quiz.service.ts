@@ -20,15 +20,15 @@ export class QuizService {
   }
 
   createQuiz(quiz: Quiz) {
-    return this.http.post(environment.URL_BASE + 'quiz', quiz);
+    return this.http.post(environment.URL_BASE + 'quiz/', quiz);
   }
 
   updateQuiz(quiz: Quiz) {
-    return this.http.put(environment.URL_BASE + 'quiz/' + quiz.id, quiz);
+    return this.http.put(environment.URL_BASE + 'quiz/' + quiz.id + "/", quiz);
   }
 
   deleteQuiz(id: number) {
-    return this.http.delete(environment.URL_BASE + 'quiz/' + id);
+    return this.http.delete(environment.URL_BASE + 'quiz/' + id + "/");
   }
   
 }

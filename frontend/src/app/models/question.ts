@@ -5,6 +5,6 @@ export class Question {
     id: number;
     text: string;
     type_question: string;
-    quiz: number;
+    quiz?: number;
     options: Option[];
 }

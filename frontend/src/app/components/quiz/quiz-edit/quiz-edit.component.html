@@ -1,0 +1,46 @@
+<form *ngIf="this.formQuiz" [formGroup]="this.formQuiz">
+    <label for="name" class="form-label">Nombre</label>
+    <input formControlName="name" class="form-control" id="name" type="text" placeholder="">
+
+    <label for="description" class="form-label">Descripción</label>
+    <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
+
+    <h2>Preguntas</h2>
+    <div formArrayName="questions">
+        <div class="mb-3" *ngFor="let questionForm of formQuiz.get('questions').controls; let idx = index">
+            <hr class="border-2 border-top">
+            <div [formGroupName]="idx">
+                <label for="question-{{idx}}-text" class="form-label">Pregunta</label>
+                <button type="button" class="btn btn-danger" (click)="removeQuestion(idx)">Eliminar</button>
+                <input formControlName="text" class="form-control" id="question-{{idx}}-text" type="text" placeholder="">
+
+                <label for="question-{{idx}}-type" class="form-label">Tipo</label>
+                <select formControlName="type_question" class="form-select form-select w-100" >
+                    <option selected>Seleccionar</option>
+                    <option value="SA">Respuesta corta</option>
+                    <option value="MCQ">Respuesta múltiple</option>
+                </select>
+
+                <ng-container *ngIf="questionForm.controls.type_question.value == 'MCQ'">
+                    <ng-container *ngFor="let optionsForm of questionForm.controls.options.controls; let i = index">
+                        <div formArrayName="options">
+                            <div [formGroupName]="i">
+                                <label for="question-{{idx}}-option-{{i}}" class="form-label">Opción</label> <button (click)="questionForm.controls.options.removeAt(i)" class="btn btn-danger btn-sm">X</button>
+                                <input formControlName="text" class="form-control" id="question-{{idx}}-option-{{i}}" type="text" placeholder="">
+                            </div>
+                        </div>
+                    </ng-container>
+                    <button (click)="addOption(idx, i)" class="btn btn-primary">Agregar opción</button>
+                </ng-container>
+                
+            </div>
+
+
+        </div>
+        <button (click)="addQuestion()" class="btn btn-primary">Agregar pregunta</button>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <button (click)="this.saveQuiz()" class="btn btn-primary">Enviar</button>
+    </div>
+</form>

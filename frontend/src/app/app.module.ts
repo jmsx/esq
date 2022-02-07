@@ -12,12 +12,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { QuizEditComponent } from './components/quiz/quiz-edit/quiz-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuizComponent,
-    QuizListComponent
+    QuizListComponent,
+    QuizEditComponent
   ],
   imports: [
     BrowserModule,
