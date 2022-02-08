@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from drf_writable_nested import WritableNestedModelSerializer
+from django.contrib.auth.models import User
 
 class OptionQuestionSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
     class Meta:
@@ -33,5 +34,10 @@ class ReportAnswerSerializer(WritableNestedModelSerializer, serializers.ModelSer
     class Meta:
         model = ReportAnswer
         fields = ('id', 'user', 'quiz', 'answers', )
+
+class UserSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
 

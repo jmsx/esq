@@ -1,0 +1,23 @@
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+  
+      <!-- Icon -->
+      <div class="fadeIn first">
+        <img src="assets/ESQ_LOGO.png" class="m-3" id="icon" alt="User Icon"/>
+      </div>
+  
+      <!-- Login Form -->
+      <form>
+        <input  ngModel type="text" id="user" class="fadeIn second" [(ngModel)]="this.username"  name="user" placeholder="Usuario">
+        <input  ngModel type="password" id="password" class="fadeIn third" [(ngModel)]="this.password" name="password" placeholder="Contraseña">
+        <input type="submit" class="fadeIn fourth" (click)="login()" value="Iniciar sesión">
+      </form>
+  
+      <!-- Remind Passowrd -->
+      <div id="formFooter">
+        <a class="underlineHover" href="#">¿Has olvidado la contraseña?</a>
+      </div>
+  
+    </div>
+  </div>
