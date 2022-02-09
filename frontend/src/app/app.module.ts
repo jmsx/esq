@@ -18,6 +18,7 @@ import { QuizEditComponent } from './components/quiz/quiz-edit/quiz-edit.compone
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { JwtHelperService, JWT_OPTIONS   } from '@auth0/angular-jwt';
+import { AnswerViewComponent } from './components/answer/answer-view/answer-view.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { JwtHelperService, JWT_OPTIONS   } from '@auth0/angular-jwt';
     QuizListComponent,
     QuizEditComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    AnswerViewComponent
   ],
   imports: [
     BrowserModule,

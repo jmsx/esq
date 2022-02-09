@@ -1,0 +1,13 @@
+<h1>Respuestas</h1>
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+    <ng-container *ngFor="let report of this.reportAnswerMins">
+        <ngb-panel title="Respuesta {{report.id}}">
+            <ng-template ngbPanelContent>
+               <ng-container *ngFor="let answer of report.answers">
+                    <strong>{{answer.text}}</strong>
+                    <p>{{answer.value}}</p>
+               </ng-container>
+            </ng-template>
+        </ngb-panel>
+    </ng-container>
+</ngb-accordion>

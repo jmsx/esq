@@ -5,7 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Option } from 'src/app/models/option';
 import { Question } from 'src/app/models/question';
 import { Quiz } from 'src/app/models/quiz';
+import { User } from 'src/app/models/user.model';
 import { QuizService } from 'src/app/services/quiz.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-quiz-edit',
@@ -16,14 +18,26 @@ export class QuizEditComponent implements OnInit {
 
   quiz: Quiz;
   formQuiz: FormGroup;
+  user: User;
 
   constructor(
     private route: ActivatedRoute,
     private quizService: QuizService,
     private toastr: ToastrService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+    
+    this.userService.getMyUser().subscribe(
+      (user: User) => {
+        this.user = user;
+        this.initQuiz();
+      }
+    );
+
+  }
+  initQuiz(){
     let id: number = +this.route.snapshot.paramMap.get('id');
     if (id != 0) {
       this.quizService.getQuiz(id).subscribe(
@@ -37,12 +51,11 @@ export class QuizEditComponent implements OnInit {
         id: undefined,
         name: '',
         questions: [],
-        owner: 1,
+        owner: this.user.id,
         description: '',
       };
       this.generateFormQuiz();
     }
-
   }
 
   // This generat a for each question in the quiz
@@ -91,6 +104,7 @@ export class QuizEditComponent implements OnInit {
     this.quiz.name = this.formQuiz.get('name').value;
     this.quiz.description = this.formQuiz.get('description').value;
     this.quiz.questions = [];
+    this.quiz.owner = this.user.id;
     this.formQuiz.get('questions').value.forEach((question: Question) => {
       let questionForm = new Question();
       if(question.id){

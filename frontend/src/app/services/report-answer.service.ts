@@ -31,5 +31,9 @@ export class ReportAnswerService {
   deleteReportAnswer(id: number) {
     return this.http.delete(environment.URL_BASE + 'reportanswer/' + id + "/");
   }
+
+  getReportAnswerByQuiz(id: number) {
+    return this.http.get<ReportAnswer[]>(environment.URL_BASE + 'reportanswer/?quiz=' + id);
+  }
   
 }

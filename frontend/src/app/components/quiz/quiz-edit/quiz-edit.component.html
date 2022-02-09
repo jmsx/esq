@@ -6,6 +6,64 @@
     <textarea formControlName="description" class="form-control" id="description" rows="3"></textarea>
 
     <h2>Preguntas</h2>
+    <!-- <button type="button" class="btn btn-sm btn-outline-danger ml-2" (click)="a.collapseAll()">Cerrar preguntas</button> -->
+
+
+    <div formArrayName="questions">
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+            <ng-container *ngFor="let questionForm of formQuiz.get('questions').controls; let idx = index">
+                <ngb-panel>
+                    <ng-template ngbPanelHeader ngbPanelToggle>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="m-0">Pregunta {{idx}}</h5>
+                            <div>
+                              <button ngbPanelToggle class="btn btn-sm btn-outline-primary m-2">Ver</button>
+                              <button type="button" class="btn btn-sm btn-outline-danger m-2" (click)="removeQuestion(idx)">Eliminar pregunta</button>
+                            </div>
+                          </div>
+                    </ng-template>
+                    <ng-template ngbPanelContent>
+                        <div [formGroupName]="idx">
+                            <label for="question-{{idx}}-text" class="form-label">Pregunta</label>
+                            <input formControlName="text" class="form-control" id="question-{{idx}}-text" type="text" placeholder="">
+                            <label for="question-{{idx}}-type" class="form-label">Tipo</label>
+                            <select formControlName="type_question" class="form-select form-select w-100" >
+                                <option selected>Seleccionar</option>
+                                <option value="SA">Respuesta corta</option>
+                                <option value="MCQ">Respuesta múltiple</option>
+                            </select>
+            
+                            <ng-container *ngIf="questionForm.controls.type_question.value == 'MCQ'">
+                                <h3>Opciones</h3>
+                                <ng-container *ngFor="let optionsForm of questionForm.controls.options.controls; let i = index">
+                                    <div formArrayName="options">
+                                        <div [formGroupName]="i">
+                                            <label for="question-{{idx}}-option-{{i}}" class="form-label">Opción</label> <span (click)="questionForm.controls.options.removeAt(i)" class="text-danger mx-1">X</span>
+                                            <input formControlName="text" class="form-control" id="question-{{idx}}-option-{{i}}" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="my-2">
+                                    <button (click)="addOption(idx, i)" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar opción</button>
+                                </div>
+                                
+                            </ng-container>
+                            
+                        </div>
+                    </ng-template>
+                </ngb-panel>
+            </ng-container>
+        </ngb-accordion>
+        <div class="my-2">
+            <button (click)="addQuestion()" class="btn btn-primary">Agregar pregunta</button>
+        </div>
+    </div>
+
+
+
+
+
+<!--     
     <div formArrayName="questions">
         <div class="mb-3" *ngFor="let questionForm of formQuiz.get('questions').controls; let idx = index">
             <hr class="border-2 border-top">
@@ -38,7 +96,7 @@
 
         </div>
         <button (click)="addQuestion()" class="btn btn-primary">Agregar pregunta</button>
-    </div>
+    </div> -->
 
     <div class="d-flex justify-content-center">
         <button (click)="this.saveQuiz()" class="btn btn-primary">Enviar</button>

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Quiz } from 'src/app/models/quiz';
+import { User } from 'src/app/models/user.model';
 import { QuizService } from 'src/app/services/quiz.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-quiz-list',
@@ -11,19 +13,28 @@ import { QuizService } from 'src/app/services/quiz.service';
 })
 export class QuizListComponent implements OnInit {
 
-  quizs: Quiz[];
+
+  user: User
+  ownQuizs: Quiz[];
+  shareQuizs: Quiz[];
 
   constructor(
     private quizService: QuizService,
     private router: Router,
     private toastr: ToastrService,
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
+    this.userService.getMyUser().subscribe(
+      (user: User) => {
+        this.user = user;
+      }
+    );
     this.quizService.getQuizs().subscribe(
       (quizs: Quiz[]) => {
-        console.log('Encuenstas:' + quizs.length);
-        this.quizs = quizs;
+        this.ownQuizs = quizs.filter(quiz => quiz.owner == this.user.id);
+        this.shareQuizs = quizs.filter(quiz => quiz.owner != this.user.id);
       },
       () => {
         console.log('Error al obtener las encuestas');
@@ -42,7 +53,7 @@ export class QuizListComponent implements OnInit {
   deleteQuiz(id: number) {
     this.quizService.deleteQuiz(id).subscribe(
       () => {
-        this.quizs = this.quizs.filter(quiz => quiz.id != id);
+        this.ownQuizs = this.ownQuizs.filter(quiz => quiz.id != id);
         this.toastr.success('Encuesta eliminada correctamente');
       },
       () => {

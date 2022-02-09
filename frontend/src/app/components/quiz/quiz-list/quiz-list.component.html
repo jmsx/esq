@@ -3,18 +3,32 @@
   <i class="fas fa-plus"></i>
   Nueva encuensta
 </button>
+
+<h2>Mis encuestas</h2>
+
 <div class="list-group">
-    <a *ngFor="let quiz of this.quizs" (click)="navigateToQuiz(quiz.id)" class="list-group-item list-group-item-action" aria-current="true">
+    <a *ngFor="let quiz of this.ownQuizs" class="list-group-item list-group-item-action" aria-current="true">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{ quiz.name }}</h5>
         <div class="justify-content-center">
-          <button (click)="deleteQuiz(quiz.id)" class="btn btn-danger btn-sm m-1">Eliminar</button>
-          <button (click)="editQuiz(quiz.id)" class="btn btn-primary btn-sm m-1">Editar</button>
-          <button (click)="navigateToQuiz(quiz.id)" class="btn btn-primary btn-sm m-1">Ver</button>
+          <button (click)="this.navigateToQuiz(quiz.id)" class="btn btn-primary btn-sm m-1"><i class="fas fa-eye    "></i></button>
+          <button (click)="deleteQuiz(quiz.id)" class="btn btn-danger btn-sm m-1"><i class="fas fa-trash"></i></button>
+          <button (click)="editQuiz(quiz.id)" class="btn btn-primary btn-sm m-1"><i class="fas fa-pencil-alt"></i></button>
+          <button [routerLink]="['/dashboard/reportanswers/', quiz.id]" class="btn btn-success btn-sm m-1"><i class="fas fa-chart-bar"></i></button>
         </div>
         <small>{{ quiz.date_published | date:'short' }}</small>
       </div>
-      <!-- <p class="mb-1">Some placeholder content in a paragraph.</p>
-      <small>And some small print.</small> -->
+      <small>{{quiz.description}}</small>
+    </a>
+  </div>
+
+  <h2>Encuestas compartidas</h2>
+
+  <div class="list-group">
+    <a *ngFor="let quiz of this.shareQuizs" (click)="navigateToQuiz(quiz.id)" class="list-group-item list-group-item-action" aria-current="true">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ quiz.name }}</h5>
+        <small>{{ quiz.date_published | date:'short' }}</small>
+      </div>
     </a>
   </div>

@@ -10,6 +10,8 @@ import { AuthService } from './auth.service';
 })
 export class UserService {
 
+  public user: User;
+
   constructor(
     private JwtHelperService: JwtHelperService,
     private http: HttpClient,

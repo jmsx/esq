@@ -12,6 +12,8 @@ import { Question } from 'src/app/models/question';
 import { Answer } from 'src/app/models/answer';
 import { ReportAnswerService } from 'src/app/services/report-answer.service';
 import { ToastrService } from 'ngx-toastr';
+import { User } from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
 
 
 
@@ -25,16 +27,29 @@ export class QuizComponent implements OnInit {
   reportAnswer: ReportAnswer;
   formGroup: FormGroup;
   quiz: Quiz;
+  user: User;
   
   constructor(
     private quizService: QuizService,
     private route: ActivatedRoute,
     private reportAnswerService: ReportAnswerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService,
+    private router: Router
+
   ) { }
 
   ngOnInit(): void {
     let id: number = +this.route.snapshot.paramMap.get('id');
+    this.userService.getMyUser().subscribe(
+      (user: User) => {
+        this.user = user;
+      },
+      () => {
+        this.toastr.error("Error al obtener el usuario");
+        this.router.navigate(['/login']);
+      }
+    );
     this.quizService.getQuiz(id).subscribe(
       (quiz: Quiz) => {
         this.quiz = quiz;
@@ -47,7 +62,7 @@ export class QuizComponent implements OnInit {
   saveReportAnswer() {
     let reportAnswer: ReportAnswer = {
       quiz: this.quiz.id,
-      user: 1,
+      user: this.user.id,
       answers: []
     };
 

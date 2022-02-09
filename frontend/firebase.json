@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/esq",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Token } from '../models/token';
-import { from, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { convertTypeAcquisitionFromJson } from 'typescript';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
 
   constructor(
     private http: HttpClient,

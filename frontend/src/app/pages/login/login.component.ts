@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Token } from 'src/app/models/token';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private toastr: ToastrService,
     private router: Router,
-    private userService: AuthService
+    private userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,15 @@ export class LoginComponent implements OnInit {
         console.log(res);
         this.auth.saveToken(res.access, res.refresh);
         this.toastr.success('Iniciaste sesión correctamente');
+        this.userService.getMyUser().subscribe(
+          (user: User) => {
+            this.userService.user = user;
+          },
+          (err) => {
+            this.toastr.error('No se pudo obtener el usuario');
+            this.router.navigate(['/']);
+          }
+        );
         this.router.navigate(['/dashboard/quizs']);
 
       },
