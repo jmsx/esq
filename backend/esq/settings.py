@@ -27,7 +27,11 @@ SECRET_KEY = 'django-insecure-qxljelree-_f_u&nd(eeklnhwo7ggq3!0(d$puz7&e=^ujaz+7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'easystatisticsquiz.herokuapp.com',
+]
 
 
 
