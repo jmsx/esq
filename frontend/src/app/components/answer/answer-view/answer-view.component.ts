@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Answer } from 'src/app/models/answer';
+import { AnswerMultipleChoice } from 'src/app/models/answer-multiple-choice';
+import { AnswerRange } from 'src/app/models/answer-range';
+import { AnswerShortAnswer } from 'src/app/models/answer-short-answer';
+import { QuestionMultipleChoice } from 'src/app/models/question-multiple-choice';
 import { ReportAnswer } from 'src/app/models/report-answer';
 import { ReportAnswerService } from 'src/app/services/report-answer.service';
 
@@ -56,18 +60,30 @@ export class AnswerViewComponent implements OnInit {
 
   reportAnwserToMin(reportAnwser: ReportAnswer): ReportAnswerMin {
     let answers: AnswerMin[] = reportAnwser.answers.map(
-        (answer: Answer) => {
-          let res: AnswerMin;
-          if(answer.question.type_question === 'SA'){
-            res = {
-              text: answer.question.text,
-              value: answer.answer_text
-            }
-          }else{
-            res = {
-              text: answer.question.text,
-              value: answer.answer_option.text
-            }
+        (answer: (AnswerMultipleChoice | AnswerShortAnswer | AnswerRange)) => {
+          let res;
+          switch (answer.question.type_question) {
+            case "SA":
+              let answerSA: AnswerShortAnswer = answer as AnswerShortAnswer;
+              res = {
+                text: answer.question.text,
+                value: answerSA.value
+              } as AnswerMin;
+              break;
+            case "MCQ":
+              let answerMCQ: AnswerMultipleChoice = answer as AnswerMultipleChoice;
+              res = {
+                text: answer.question.text,
+                value: answerMCQ.answer_option.text
+              } as AnswerMin;
+              break;
+            case "RQ":
+              let answerRQ: AnswerRange = answer as AnswerRange;
+              res = {
+                text: answer.question.text,
+                value: '' + answerRQ.value
+              } as AnswerMin;
+              break;
           }
           return res
         }
@@ -79,9 +95,5 @@ export class AnswerViewComponent implements OnInit {
     };
     return reportMin;
   }
-
-
-
-
 
 }

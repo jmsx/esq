@@ -1,4 +1,7 @@
 import { Question } from "./question";
+import { QuestionMultipleChoice } from "./question-multiple-choice";
+import { QuestionRange } from "./question-range";
+import { QuestionShortAnswer } from "./question-short-answer";
 
 export class Quiz {
     id: number;
@@ -13,5 +16,9 @@ export class Quiz {
     is_deleted?: boolean;
     owner: number;
     shares?: any[];
-    questions: Question[];
+    questions: (
+        QuestionMultipleChoice |
+        QuestionShortAnswer |
+        QuestionRange
+    )[];
 }

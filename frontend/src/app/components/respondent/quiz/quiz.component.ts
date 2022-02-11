@@ -14,6 +14,12 @@ import { ReportAnswerService } from 'src/app/services/report-answer.service';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { AnswerShortAnswer } from 'src/app/models/answer-short-answer';
+import { AnswerMultipleChoice } from 'src/app/models/answer-multiple-choice';
+import { QuestionMultipleChoice } from 'src/app/models/question-multiple-choice';
+import { QuestionShortAnswer } from 'src/app/models/question-short-answer';
+import { QuestionRange } from 'src/app/models/question-range';
+import { AnswerRange } from 'src/app/models/answer-range';
 
 
 
@@ -66,21 +72,29 @@ export class QuizComponent implements OnInit {
       answers: []
     };
 
-
-
-    this.quiz.questions.forEach((question: Question) => {
-      let answer: Answer;
-      if(question.type_question === 'SA') {
-        answer = {
-          question: question,
-          answer_text: this.formGroup.get("question-" + this.quiz.id + "-" + question.id).value
-        };
-      } else if(question.type_question === 'MCQ') {
-        answer = {
-          question: question,
-          answer_option: this.quiz.questions.find(q => q.id == question.id).options.find(o => o.id == +this.formGroup.get("question-" + this.quiz.id + "-" + question.id).value) 
-        };
-      }
+    this.quiz.questions.forEach(
+      (question: (QuestionMultipleChoice | QuestionShortAnswer | QuestionRange)) => {   
+        let answer;  
+        switch(question.type_question){
+          case 'MCQ':
+            answer = new AnswerMultipleChoice({
+              question: question,
+              answer_option: (<QuestionMultipleChoice>this.quiz.questions.find(q => q.id == question.id)).options.find(o => o.id == +this.formGroup.get("question-" + this.quiz.id + "-" + question.id).value) 
+            });
+            break;
+          case 'SA':
+            answer = new AnswerShortAnswer({
+              question: question,
+              value: this.formGroup.get("question-" + this.quiz.id + "-" + question.id).value
+            } as AnswerShortAnswer);
+            break;
+          case 'RQ':
+            answer = new AnswerRange({
+              question: question,
+              value: this.formGroup.get("question-" + this.quiz.id + "-" + question.id).value
+            });
+            break;
+        }   
       reportAnswer.answers.push(answer);
     });
 

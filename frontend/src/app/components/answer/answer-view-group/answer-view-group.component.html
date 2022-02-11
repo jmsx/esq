@@ -1,0 +1,28 @@
+<ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0"  >
+        <ngb-panel *ngFor="let question of this.groupAnswers | keyvalue" title="{{question.value.question}}">
+            <ng-template ngbPanelContent>
+                <ng-container *ngIf="question.value.type == 'SA'">
+                    <ul>
+                        <li *ngFor="let a of question.value.answers">{{a}}</li>
+                    </ul>
+                </ng-container>
+                <ng-container *ngIf="question.value.type == 'MCQ'">
+                    <apx-chart *ngIf="this.chartOptions[question.key]"
+                        [series]="this.chartOptions[question.key].series"
+                        [chart]="this.chartOptions[question.key].chart"
+                        [title]="this.chartOptions[question.key].title"
+                        [xaxis]="this.chartOptions[question.key].xaxis">
+                    </apx-chart>
+                </ng-container>
+                <ng-container *ngIf="question.value.type == 'RQ'">
+                    <apx-chart *ngIf="this.chartOptions[question.key]"
+                        [series]="this.chartOptions[question.key].series"
+                        [chart]="this.chartOptions[question.key].chart"
+                        [title]="this.chartOptions[question.key].title"
+                        [xaxis]="this.chartOptions[question.key].xaxis">
+                    </apx-chart>
+                </ng-container>
+            </ng-template>
+        </ngb-panel>
+    
+</ngb-accordion>

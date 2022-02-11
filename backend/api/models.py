@@ -1,4 +1,11 @@
 from django.db import models
+from polymorphic.models import PolymorphicModel
+
+
+
+
+def NON_POLYMORPHIC_CASCADE(collector, field, sub_objs, using):
+    return models.CASCADE(collector, field, sub_objs.non_polymorphic(), using)
 
 # Data models for Quiz and Question
 class Quiz(models.Model):
@@ -18,17 +25,44 @@ class Quiz(models.Model):
     def __str__(self):
         return self.name
 
-class OptionQuestion(models.Model):
-    question = models.ForeignKey('Question', on_delete=models.CASCADE)
+class OptionQuestionMultipleChoice(PolymorphicModel):
+    question = models.ForeignKey('QuestionMultipleChoice', on_delete=NON_POLYMORPHIC_CASCADE, related_name='options')
     text = models.CharField(max_length=200)
 
     def __str__(self):
         return self.text
 
-class Question(models.Model):
+
+
+class Question(PolymorphicModel):
+
+    QUESTION_TYPES = [
+        ('MCQ', 'Multiple Choice'),
+        ('SA', 'Short Answer'),
+        ('RQ', 'Range Question'),
+    ]
+
     text = models.CharField(max_length=200)
-    type_question = models.CharField(max_length=200, choices=[('MCQ', 'Multiple Choice'), ('SA', 'Short Answer')])
-    quiz = models.ForeignKey('Quiz', on_delete=models.CASCADE)
+    type_question = models.CharField(max_length=200, choices=QUESTION_TYPES)
+    quiz = models.ForeignKey('Quiz', on_delete=NON_POLYMORPHIC_CASCADE)
+
+    def __str__(self):
+        return self.text
+
+class QuestionMultipleChoice(Question):
+    multiple = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.text
+
+class QuestionShortAnswer(Question):
+
+    def __str__(self):
+        return self.text
+
+class QuestionRange(Question):
+    min = models.IntegerField()
+    max = models.IntegerField()
 
     def __str__(self):
         return self.text
@@ -40,11 +74,38 @@ class ReportAnswer(models.Model):
     def __str__(self):
         return str(self.user) + ' - ' + str(self.quiz)
 
-class Answer(models.Model):
-    report_answer = models.ForeignKey('ReportAnswer', on_delete=models.CASCADE)
-    question = models.ForeignKey('Question', on_delete=models.CASCADE)
-    answer_option = models.ForeignKey('OptionQuestion', on_delete=models.CASCADE, blank=True, null=True)
-    answer_text = models.CharField(max_length=200, blank=True)
+class Answer(PolymorphicModel):
+    report_answer = models.ForeignKey('ReportAnswer', on_delete=NON_POLYMORPHIC_CASCADE)
+    question = models.ForeignKey('Question', on_delete=NON_POLYMORPHIC_CASCADE)
 
     def __str__(self):
         return str(self.question)
+
+class AnswerMultipleChoice(Answer):
+    answer_option = models.ForeignKey('OptionQuestionMultipleChoice', on_delete=NON_POLYMORPHIC_CASCADE)
+
+    def __str__(self):
+        return str(self.question)
+
+class AnswerShortAnswer(Answer):
+    value = models.CharField(max_length=200)
+
+    def __str__(self):
+        return str(self.question)
+
+class AnswerRange(Answer):
+    value = models.IntegerField()
+
+    def __str__(self):
+        return str(self.question)
+
+
+
+
+
+def get_subclasses_as_choice(klass):
+    choices = {subclass.__name__.lower(): subclass
+               for subclass in klass.__subclasses__()}
+    return choices
+
+

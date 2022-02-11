@@ -8,11 +8,8 @@ from rest_framework_simplejwt import views as jwt_views
 
 router = DefaultRouter()
 
-router.register(r'quiz', views.QuizViewSet)
-router.register(r'question', views.QuestionViewSet)
-router.register(r'optionquestion', views.OptionQuestionViewSet)
-router.register(r'reportanswer', views.ReportAnswerViewSet)
-router.register(r'answer', views.AnswerViewSet)
+router.register(r'quiz', views.QuizViewSet, basename='quiz')
+router.register(r'reportanswer', views.ReportAnswerViewSet, basename='reportanswer')
 router.register(r'user', views.UserViewSet)
 
 admin.site.site_header = "Easy Statdistics Quiz ADMIN"

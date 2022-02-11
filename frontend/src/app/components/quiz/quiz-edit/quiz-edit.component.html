@@ -30,7 +30,8 @@
                             <select formControlName="type_question" class="form-select form-select w-100" >
                                 <option selected>Seleccionar</option>
                                 <option value="SA">Respuesta corta</option>
-                                <option value="MCQ">Respuesta múltiple</option>
+                                <option value="MCQ">Multiple opciones</option>
+                                <option value="RQ">Rango</option>
                             </select>
             
                             <ng-container *ngIf="questionForm.controls.type_question.value == 'MCQ'">
@@ -47,6 +48,12 @@
                                     <button (click)="addOption(idx, i)" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar opción</button>
                                 </div>
                                 
+                            </ng-container>
+                            <ng-container *ngIf="questionForm.controls.type_question.value == 'RQ'">
+                                <label for="question-{{idx}}-min" class="form-label">Mínimo</label>
+                                <input formControlName="min" class="form-control" id="question-{{idx}}-min" type="number" placeholder="">
+                                <label for="question-{{idx}}-max" class="form-label">Máximo</label>
+                                <input formControlName="max" class="form-control" id="question-{{idx}}-max" type="number" placeholder="">
                             </ng-container>
                             
                         </div>

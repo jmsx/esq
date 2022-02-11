@@ -19,6 +19,9 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { JwtHelperService, JWT_OPTIONS   } from '@auth0/angular-jwt';
 import { AnswerViewComponent } from './components/answer/answer-view/answer-view.component';
+import { AnswerViewGroupComponent } from './components/answer/answer-view-group/answer-view-group.component';
+import { GridFunctionsComponent } from './components/statistics/grid-functions/grid-functions.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 @NgModule({
@@ -29,7 +32,9 @@ import { AnswerViewComponent } from './components/answer/answer-view/answer-view
     QuizEditComponent,
     LoginComponent,
     DashboardComponent,
-    AnswerViewComponent
+    AnswerViewComponent,
+    AnswerViewGroupComponent,
+    GridFunctionsComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,8 @@ import { AnswerViewComponent } from './components/answer/answer-view/answer-view
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgbModule,
-    FormsModule
+    FormsModule,
+    NgApexchartsModule,
     
   ],
   providers: [

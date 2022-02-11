@@ -1,10 +1,9 @@
-import { Option } from "./option";
-
-
 export class Question {
-    id: number;
-    text: string;
+    id?: number;
     type_question: string;
-    quiz?: number;
-    options: Option[];
+    text: string;
+
+    constructor(obj: Question) {
+        Object.assign(this, obj);
+    }
 }

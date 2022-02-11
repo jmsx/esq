@@ -16,7 +16,10 @@
           </select>
       </ng-container>
 
-    
+
+      <ng-container *ngIf="question.type_question == 'RQ'">
+        <input type="range" min="{{question.min}}" max="{{question.max}}" formControlName='question-{{quiz.id}}-{{question.id}}' class="form-control" id="question-{{quiz.id}}-{{question.id}}" />
+      </ng-container>
 
     </div>
 
