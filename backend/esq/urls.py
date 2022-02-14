@@ -26,6 +26,7 @@ urlpatterns = [
     # API
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/export/', views.DataExport.as_view(), name='export'),
     path('api/', include(router.urls)),
 
     # Documentation

@@ -87,14 +87,23 @@ class AnswerMultipleChoice(Answer):
     def __str__(self):
         return str(self.question)
 
+    def get_value(self):
+        return self.answer_option.text
+
 class AnswerShortAnswer(Answer):
     value = models.CharField(max_length=200)
 
     def __str__(self):
         return str(self.question)
 
+    def get_value(self):
+        return self.value
+
 class AnswerRange(Answer):
     value = models.IntegerField()
+
+    def get_value(self):
+        return self.value
 
     def __str__(self):
         return str(self.question)
