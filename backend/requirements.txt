@@ -33,4 +33,5 @@ sqlparse==0.4.2
 uritemplate==4.1.1
 urllib3==1.26.8
 whitenoise==5.3.0
+XlsxWriter==3.0.2
 zipp==3.7.0
