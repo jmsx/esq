@@ -26,6 +26,7 @@
     "@popperjs/core": "^2.11.2",
     "apexcharts": "^3.33.1",
     "bootstrap": "^4.6.0",
+    "file-saver": "^2.0.5",
     "ng-apexcharts": "^1.7.0",
     "ngx-toastr": "^14.2.1",
     "ts-md5": "^1.2.11",

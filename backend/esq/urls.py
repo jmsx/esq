@@ -11,6 +11,7 @@ router = DefaultRouter()
 router.register(r'quiz', views.QuizViewSet, basename='quiz')
 router.register(r'reportanswer', views.ReportAnswerViewSet, basename='reportanswer')
 router.register(r'user', views.UserViewSet)
+router.register(r'stadisticanswer', views.StadisticAnswerView)
 
 admin.site.site_header = "Easy Statdistics Quiz ADMIN"
 admin.site.site_title = "Easy Statdistics Quiz ADMIN"

@@ -19,11 +19,14 @@ class QuizViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         if user is not None and user.is_authenticated:  
-            return Quiz.objects.filter(
+            res = Quiz.objects.filter(
                 Q(
-                    Q(owner=user) | Q(shares=user.id)
+                    Q(owner=user.id) | Q(shares=user.id)
                 )
             )
+
+            res = list(dict.fromkeys(res))
+            return res
         else:
             return Quiz.objects.none()
 
@@ -52,6 +55,10 @@ class AnswerViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class StadisticAnswerView(viewsets.ModelViewSet):
+    queryset = StadisticAnswer.objects.all()
+    serializer_class = StadisticAnswerSerializer
 
 
 class DataExport(APIView):

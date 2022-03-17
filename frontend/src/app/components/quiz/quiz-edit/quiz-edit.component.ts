@@ -149,6 +149,7 @@ export class QuizEditComponent implements OnInit {
       this.quizService.updateQuiz(this.quiz).subscribe(
         (quiz: Quiz) => {
           this.quiz = quiz;
+          this.generateFormQuiz();
           this.toastr.success('Quiz updated successfully');
         },
         (error) => {
@@ -160,6 +161,7 @@ export class QuizEditComponent implements OnInit {
       this.quizService.createQuiz(this.quiz).subscribe(
         (quiz: Quiz) => {
           this.quiz = quiz;
+          this.generateFormQuiz();
           this.toastr.success('Quiz created successfully');
         },
         (error) => {

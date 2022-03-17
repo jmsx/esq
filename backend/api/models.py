@@ -97,7 +97,11 @@ class AnswerShortAnswer(Answer):
         return str(self.question)
 
     def get_value(self):
-        return self.value
+        stadistic_answer = StadisticAnswer.objects.filter(answer=self).first()
+        if stadistic_answer:
+            return stadistic_answer.value
+        else:
+            return self.value
 
 class AnswerRange(Answer):
     value = models.IntegerField()
@@ -109,6 +113,15 @@ class AnswerRange(Answer):
         return str(self.question)
 
 
+class StadisticAnswer(models.Model):
+    answer = models.ForeignKey('Answer', on_delete=models.CASCADE)
+    value = models.TextField()
+
+    def __str__(self):
+        return  str(self.answer) + ' - ' + str(self.value)
+
+    def get_value(self):
+        return self.value
 
 
 

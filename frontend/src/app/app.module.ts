@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +21,7 @@ import { AnswerViewComponent } from './components/answer/answer-view/answer-view
 import { AnswerViewGroupComponent } from './components/answer/answer-view-group/answer-view-group.component';
 import { GridFunctionsComponent } from './components/statistics/grid-functions/grid-functions.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { authInterceptorProviders } from './provider/auth.interceptor';
 
 
 @NgModule({
@@ -50,6 +50,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    authInterceptorProviders,
     JwtHelperService
   ],
   bootstrap: [AppComponent]

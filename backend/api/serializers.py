@@ -111,3 +111,10 @@ class ReportAnswerSerializer(WritableNestedModelSerializer, serializers.ModelSer
     class Meta:
         model = ReportAnswer
         fields = ('id', 'user', 'quiz', 'answers', )
+
+
+class StadisticAnswerSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
+    answer = AnswerPolymorphicSerializer(many=False, read_only=True)
+    class Meta:
+        model = StadisticAnswer
+        fields = ('id', 'answer', 'value')

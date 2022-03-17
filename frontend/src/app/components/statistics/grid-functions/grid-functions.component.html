@@ -20,6 +20,16 @@
         </div>
 
         <div class="col p-1">
+            <div (click)="this.downloadData()" class="card h-100 shadow-sm text-center">   
+                <div class="card-body">
+                    <i class="fas fa-download fa-2x mt-2"></i>
+                    <p>Descargar respuestas</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col p-1">
             <div [routerLink]="['/dashboard/reportanswersgroup/', quizId]" class="card h-100 shadow-sm text-center">   
                 <div class="card-body">
                     <i class="fas fa-table fa-2x mt-2 "></i>

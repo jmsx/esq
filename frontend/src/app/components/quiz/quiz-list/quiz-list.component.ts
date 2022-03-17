@@ -26,15 +26,23 @@ export class QuizListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.user = this.userService.user;
     this.userService.getMyUser().subscribe(
       (user: User) => {
         this.user = user;
+        this.updateQuizs();
       }
     );
+  }
+
+
+  updateQuizs() {
     this.quizService.getQuizs().subscribe(
       (quizs: Quiz[]) => {
         this.ownQuizs = quizs.filter(quiz => quiz.owner == this.user.id);
+        console.log(this.ownQuizs)
         this.shareQuizs = quizs.filter(quiz => quiz.owner != this.user.id);
+        console.log(this.shareQuizs)
       },
       () => {
         console.log('Error al obtener las encuestas');

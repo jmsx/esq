@@ -10,6 +10,8 @@ admin.site.register(OptionQuestionMultipleChoice)
 
 admin.site.register(ReportAnswer)
 
+admin.site.register(StadisticAnswer)
+
 admin.site.register(Answer)
 admin.site.register(AnswerMultipleChoice)
 admin.site.register(AnswerShortAnswer)
