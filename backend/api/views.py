@@ -23,12 +23,13 @@ class QuizViewSet(viewsets.ModelViewSet):
                 Q(
                     Q(owner=user.id) | Q(shares=user.id)
                 )
-            )
+            ).distinct()
 
-            res = list(dict.fromkeys(res))
             return res
         else:
             return Quiz.objects.none()
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(self, request, *args, **kwargs)
 
 class QuestionViewSet(viewsets.ModelViewSet):
     queryset = Question.objects.all()
