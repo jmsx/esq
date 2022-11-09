@@ -1,0 +1,58 @@
+<div class="card m-5">
+    <div class="card-body">
+        <table class="table">
+            <caption>Categorias</caption>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Valores</th>
+                <th>Modificar</th>
+                <th>Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of this.categorias">
+                <td>Categoria {{c.id}}</td>
+                <td>
+                    <ul>
+                        <li *ngFor="let v of c.candidatas">
+                        {{v}}
+                        </li>
+                    </ul>
+                </td>
+                <td><textarea type="text" [(ngModel)]="c.candidatas_texto" ></textarea></td>
+                <td>
+                  <button class="btn btn-primary mx-1" (click)="this.editarCategoria(c.id)">Actualizar</button>
+                  <button class="btn btn-danger mx-1" (click)="this.eliminarCategoria(c.id)">Eliminar</button>
+              </tr>
+            </tbody>
+          </table>
+          <button class="btn btn-success" (click)="this.agregarCategoria()">Agregar</button>
+    </div>
+  </div>
+
+
+<div class="card m-5">
+    <div class="card-body">
+        <table class="table">
+            <caption>Respuestas</caption>
+            <thead>
+              <tr>
+                <th scope="col">Text</th>
+                <th *ngFor="let c of this.categorias" scope="col"> Categoria {{c.id}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of this.respuestas">
+                <td><textarea type="text" [(ngModel)]="r.text" ></textarea></td>
+                <td *ngFor="let c of r.categorias_">
+                    <span class="badge {{getConfianzaClass(c.confianza)}} rounded-pill d-inline" >{{c.seleccionada}} | {{getConfianza(c.confianza)}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        <button class="btn btn-success mx-1" (click)="this.agregarRespuesta()">Agregar</button>
+        <button class="btn btn-primary mx-1" (click)="this.categorizar()">Categorizar respuestas</button>
+    </div>
+  </div>
+
