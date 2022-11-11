@@ -11,5 +11,14 @@
         "predeploy": [
             "npm --prefix \"$RESOURCE_DIR\" run build"
         ]
+    }],
+    "hosting": [{
+        "target": "demo",
+        "public": "demo/dist/demo",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ]
     }]
 }

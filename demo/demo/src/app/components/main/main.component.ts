@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -11,11 +12,14 @@ export class MainComponent implements OnInit {
 
   respuestas: Respuesta[] = [];
   categorias: Categoria[] = [];
+  categorice_enable = true;
+
 
  
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private toastr: ToastrService
   ) { 
 
   }
@@ -25,7 +29,12 @@ export class MainComponent implements OnInit {
     if (categoria) {
       let text = categoria.candidatas_texto || "";
       let candidatas = text.split(",").map((c: string) => c.trim());
-      categoria.candidatas = candidatas;
+      if (candidatas.length < 2) {
+        this.toastr.error("You must enter at least two candidates separated by commas.", "Error");
+      } else {
+        categoria.candidatas = candidatas;
+        this.toastr.success("Category successfully edited");
+      }
     }
   }
 
@@ -55,7 +64,25 @@ export class MainComponent implements OnInit {
 
 
   categorizar() {
+
+    // CHECKEAR QUE TODAS LAS CATEGORIAS TENGAN AL MENOS DOS CANDIDATAS
+    for (let categoria of this.categorias) {
+      if (categoria.candidatas.length < 2) {
+        this.toastr.error("You must enter at least two candidates for each category.", "Error");
+        return;
+      }
+    }
+
+    // CHECKEAR QUE TODAS LAS RESPUESTAS TENGAN TEXTO
     for (let respuesta of this.respuestas) {
+      if (respuesta.text == "") {
+        this.toastr.error("You must enter text for each response.", "Error");
+        return;
+      }
+    }
+
+    for (let respuesta of this.respuestas) {
+      this.categorice_enable = false
       respuesta.categorias_ = []
       for (let categoria of this.categorias) {
         let candidatas = categoria.candidatas;
@@ -69,6 +96,12 @@ export class MainComponent implements OnInit {
       }
       respuesta.categorizar();
     }
+
+    // Wait for all 10 seconds
+    setTimeout(() => {
+      this.categorice_enable = true
+    }, 10000);
+    
     
   }
 
@@ -123,6 +156,9 @@ class Respuesta {
   eliminarCategoria(id: number) {
     this.categorias_ = this.categorias_.filter(c => c.id != id);
   }
+
+
+
 
   categorizar() {
     this.categorias_.forEach(categoria => {

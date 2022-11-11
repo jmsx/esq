@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 mx-auto">
+        <div class="card m-5">
+            <div id="stepper1" class="bs-stepper">
+                <div class="bs-stepper-header">
+                    <div class="step" data-target="#test-l-1">
+                        <button class="step-trigger">
+                      <span class="bs-stepper-circle">1</span>
+                      <span class="bs-stepper-label">Demo</span>
+                    </button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="step" data-target="#test-l-2">
+                        <button class="step-trigger">
+                      <span class="bs-stepper-circle">2</span>
+                      <span class="bs-stepper-label">How to use it?</span>
+                    </button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="step" data-target="#test-l-3">
+                        <button class="step-trigger">
+                      <span class="bs-stepper-circle">3</span>
+                      <span class="bs-stepper-label">Try!</span>
+                    </button>
+                    </div>
+                </div>
+                <div class="bs-stepper-content">
+                    <form (ngSubmit)="onSubmit()">
+                        <div id="test-l-1" class="content">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 text-center">
+                                    <img src="assets/undraw_happy_announcement_re_tsm0.svg" width="50%" class="center" alt="" srcset="">
+                                </div>
+                                <div class="col my-auto">
+                                    ESQ has created a categorization demo where you can test our category assignment using our artificial intelligence.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button (click)="next()" class="btn btn-primary mx-auto my-2">Next</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="test-l-2" class="content">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6 text-center">
+                                    <img src="assets/undraw_happy_news_re_tsbd.svg" width="50%" class="center" alt="" srcset="">
+                                </div>
+                                <div class="col my-auto">
+                                    <ol>
+                                        <li>Add a category and update its values from which our AI will select the best fit.</li>
+                                        <li>Add the answers you wish to categorize with these values for each category.</li>
+                                        <li>Press a button and your answers will be intelligently categorized.</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <button (click)="next()" class="btn btn-primary mx-auto my-2">Next</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="test-l-3" class="content text-center">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <img src="assets/undraw_startup_life_re_8ow9.svg" width="50%" class="center" alt="" srcset="">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <a [routerLink]="[ '/demo' ]">
+                                        <button class="btn btn-primary mx-auto my-2">Try!</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

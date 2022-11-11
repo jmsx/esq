@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "easystatisticsquiz"
-  }
+  },
+  "targets": {
+    "easystatisticsquiz": {
+      "hosting": {
+        "demo": [
+          "esq-demo-ia"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
